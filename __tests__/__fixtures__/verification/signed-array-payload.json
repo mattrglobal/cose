@@ -1,0 +1,14 @@
+{
+  "valueType": "array",
+  "fixture": "d28443a10126a0583282a264746573746961747472696275746566697354657374f5a264746573746a6174747269627574653166697354657374f4d8405840400cdd3ec44710594617930e83bdf1d787f79690956db0c92d3f49329833a74e362b88d50cb4b6301ab58e0ab79e99e5649539bbf53655e6c9f33bbbf18a12f9",
+  "value": [
+    {
+      "test": "attribute",
+      "isTest": true
+    },
+    {
+      "test": "attribute1",
+      "isTest": false
+    }
+  ]
+}

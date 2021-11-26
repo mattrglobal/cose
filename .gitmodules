@@ -1,0 +1,3 @@
+[submodule "__tests__/__fixtures__/Examples"]
+	path = __tests__/__fixtures__/Examples
+	url = https://github.com/cose-wg/Examples.git
