@@ -34,9 +34,8 @@ export const JwkKtyToCoseKeyTypeConversionMap: { [key: string]: number } = conve
 /**
  * @ignore
  */
-export const CoseKeyTypeToJwkKtyConversionMap: { [key: number]: string } = convertEnumToReverseMapObj(
-  JwkKtyToCoseKeyTypeEnum
-);
+export const CoseKeyTypeToJwkKtyConversionMap: { [key: number]: string } =
+  convertEnumToReverseMapObj(JwkKtyToCoseKeyTypeEnum);
 
 /**
  * @ignore
@@ -178,9 +177,8 @@ export const JwkCrvToCoseKeyCurveConversionMap: { [key: string]: number } = conv
 /**
  * @ignore
  */
-export const CoseKeyCurveToJwkCrvConversionMap: { [key: number]: string } = convertEnumToReverseMapObj(
-  JwkCrvToCoseKeyCurveEnum
-);
+export const CoseKeyCurveToJwkCrvConversionMap: { [key: number]: string } =
+  convertEnumToReverseMapObj(JwkCrvToCoseKeyCurveEnum);
 
 /**
  * @ignore

@@ -20,6 +20,7 @@ export enum CoseHeaderParameterEnum {
   coutnersignature0 = 9,
   kidcontext = 10,
   x5bag = 32,
+  x5chain = 33,
   x5u = 35,
 }
 
@@ -33,6 +34,5 @@ export const CoseHeaderParameters: { [key: string]: number } = convertEnumToObj(
  * A list of supported COSE Header Parameters
  * @see https://www.iana.org/assignments/cose/cose.xhtml
  */
-export const CoseHeaderParametersReverseMap: { [key: number]: string } = convertEnumToReverseMapObj(
-  CoseHeaderParameterEnum
-);
+export const CoseHeaderParametersReverseMap: { [key: number]: string } =
+  convertEnumToReverseMapObj(CoseHeaderParameterEnum);

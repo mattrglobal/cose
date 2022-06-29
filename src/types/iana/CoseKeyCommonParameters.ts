@@ -14,7 +14,6 @@ export enum CoseKeyCommonParameterEnum {
   kty = 1,
   kid = 2,
   alg = 3,
-  /* eslint-disable-next-line @typescript-eslint/camelcase */
   key_ops = 4,
   BaseIV = 5,
 }
@@ -29,6 +28,5 @@ export const CoseKeyCommonParameters: { [key: string]: number } = convertEnumToO
  * A list of supported COSE Key Common Parameters
  * @see https://www.iana.org/assignments/cose/cose.xhtml
  */
-export const CoseKeyCommonParametersReverseMap: { [key: number]: string } = convertEnumToReverseMapObj(
-  CoseKeyCommonParameterEnum
-);
+export const CoseKeyCommonParametersReverseMap: { [key: number]: string } =
+  convertEnumToReverseMapObj(CoseKeyCommonParameterEnum);

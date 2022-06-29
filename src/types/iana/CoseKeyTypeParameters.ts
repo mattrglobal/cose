@@ -27,6 +27,5 @@ export const CoseEcKeyTypeParameters: { [key: string]: number } = convertEnumToO
  * A list of supported COSE Key Type Parameters for Elliptic Curve based keys EC2 and OKP
  * @see https://www.iana.org/assignments/cose/cose.xhtml
  */
-export const CoseEcKeyTypeParametersReverseMap: { [key: number]: string } = convertEnumToReverseMapObj(
-  CoseEcKeyTypeParameterEnum
-);
+export const CoseEcKeyTypeParametersReverseMap: { [key: number]: string } =
+  convertEnumToReverseMapObj(CoseEcKeyTypeParameterEnum);

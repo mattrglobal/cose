@@ -17,6 +17,7 @@ type CoseErrorOptions = {
   type: CoseErrorTypes;
   details?: unknown;
 };
+
 export class CoseError extends Error {
   public type: CoseErrorTypes;
   public details: unknown;
@@ -28,4 +29,8 @@ export class CoseError extends Error {
     this.details = details;
     Error.captureStackTrace(this);
   }
+}
+
+export function isCoseError(error: unknown, type?: string): error is CoseError {
+  return !!(error && error instanceof CoseError && (!type || type === error.type));
 }

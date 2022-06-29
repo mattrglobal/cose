@@ -14,20 +14,24 @@ export type ByteArray = Uint8Array | Buffer;
 /**
  * @ignore
  */
-export const isType = <T>(validator: ZodTypeAny) => (value: unknown): value is T => {
-  return validator.safeParse(value).success;
-};
+export const isType =
+  <T>(validator: ZodTypeAny) =>
+  (value: unknown): value is T => {
+    return validator.safeParse(value).success;
+  };
 
 /**
  * @ignore
  */
-export const assertType = <T>(validator: ZodTypeAny, message: string) => (data: unknown): data is T => {
-  const result = validator.safeParse(data);
-  if (!result.success) {
-    throw new CoseError({ message, type: CoseErrorTypes.ValidationError, details: result.error });
-  }
-  return result.success;
-};
+export const assertType =
+  <T>(validator: ZodTypeAny, message: string) =>
+  (data: unknown): data is T => {
+    const result = validator.safeParse(data);
+    if (!result.success) {
+      throw new CoseError({ message, type: CoseErrorTypes.ValidationError, details: result.error });
+    }
+    return result.success;
+  };
 
 /**
  * @ignore

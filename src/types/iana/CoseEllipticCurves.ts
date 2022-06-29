@@ -31,6 +31,5 @@ export const CoseEllipticCurves: { [key: string]: number } = convertEnumToObj(Co
  * A list of supported COSE Elliptic Curves
  * @see https://www.iana.org/assignments/cose/cose.xhtml
  */
-export const CoseEllipticCurvesReverseMap: { [key: number]: string } = convertEnumToReverseMapObj(
-  CoseEllipticCurveEnum
-);
+export const CoseEllipticCurvesReverseMap: { [key: number]: string } =
+  convertEnumToReverseMapObj(CoseEllipticCurveEnum);

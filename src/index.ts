@@ -15,4 +15,4 @@ export { sign } from "./sign";
 export { verify } from "./verify";
 export { decode, getHeaderParameter, getHeader, getKid } from "./utilities";
 export { encodeCoseKey, decodeCoseKey } from "./coseKey";
-export { CoseErrorTypes } from "./common/error";
+export { CoseErrorTypes, CoseError, isCoseError } from "./common/error";

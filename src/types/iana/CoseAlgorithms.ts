@@ -30,6 +30,5 @@ export const CoseSignatureAlgorithms: { [key: string]: number } = convertEnumToO
  * A list of supported COSE Algorithms for usage with COSE_Sign* structures
  * @see https://www.iana.org/assignments/cose/cose.xhtml
  */
-export const CoseSignatureAlgorithmsReverseMap: { [key: number]: string } = convertEnumToReverseMapObj(
-  CoseSignatureAlgorithmEnum
-);
+export const CoseSignatureAlgorithmsReverseMap: { [key: number]: string } =
+  convertEnumToReverseMapObj(CoseSignatureAlgorithmEnum);
