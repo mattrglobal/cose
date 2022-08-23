@@ -14,6 +14,9 @@ import {
   SignOptions,
   SignTag,
   SingleSignOptions,
+  SingleSignDecodedResult,
+  MultiSignDecodedResult,
+  MultiSignSignature,
 } from "./types";
 import { EMPTY_BUFFER, encodeCoseHeaders, getHeader, normalizeCoseHeaderParameters, signPayload } from "./utilities";
 
@@ -23,10 +26,11 @@ import { signData } from "./crypto";
 import { assertSignOptions } from "./types/SignOptions";
 import { isByteArray } from "./types/common";
 import { CoseError, CoseErrorTypes } from "./common/error";
+import { SignResult } from "./types/SignResult";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-const singleSign = async (options: SingleSignOptions): Promise<Uint8Array> => {
+const singleSign = async (options: SingleSignOptions): Promise<Uint8Array | SingleSignDecodedResult> => {
   let { unprotectedHeaders, protectedHeaders } = options;
   const { payload, additionalAuthenticatedData } = options;
 
@@ -74,12 +78,21 @@ const singleSign = async (options: SingleSignOptions): Promise<Uint8Array> => {
 
   const signature = await signPayload(externalSigner, cbor.encodeCanonical(signaturePayload), usingExternalSigner);
 
-  const result = [encodedProtectedHeaders, convertedUnprotectedHeaders, payload, Buffer.from(signature)];
+  const result: SingleSignDecodedResult = [
+    encodedProtectedHeaders,
+    convertedUnprotectedHeaders,
+    payload,
+    Buffer.from(signature),
+  ];
+
+  if (options.skipEncodingResult) {
+    return result;
+  }
 
   return new Uint8Array(cbor.encodeCanonical(options.skipTag ? result : new Tagged(Sign1Tag, result)));
 };
 
-const multiSign = async (options: MultiSignOptions): Promise<Uint8Array> => {
+const multiSign = async (options: MultiSignOptions): Promise<Uint8Array | MultiSignDecodedResult> => {
   const { unprotectedHeaders, protectedHeaders } = options;
   const { payload, additionalAuthenticatedData } = options;
 
@@ -92,7 +105,7 @@ const multiSign = async (options: MultiSignOptions): Promise<Uint8Array> => {
 
   const encodedProtectedHeaders = encodeCoseHeaders(convertedProtectedHeaders);
 
-  const signatures = await Promise.all(
+  const signatures: MultiSignSignature[] = await Promise.all(
     options.signers.map(async (signer) => {
       let { externalSigner } = signer;
       const { privateKey, algorithm, protectedHeaders } = signer;
@@ -131,11 +144,21 @@ const multiSign = async (options: MultiSignOptions): Promise<Uint8Array> => {
     })
   );
 
-  const result = [encodedProtectedHeaders, convertedUnprotectedHeaders, payload, [...signatures]];
+  const result: MultiSignDecodedResult = [
+    encodedProtectedHeaders,
+    convertedUnprotectedHeaders,
+    payload,
+    [...signatures],
+  ];
+
+  if (options.skipEncodingResult) {
+    return result;
+  }
+
   return new Uint8Array(cbor.encodeCanonical(options.skipTag ? result : new Tagged(SignTag, result)));
 };
 
-export const sign = async (options: SignOptions): Promise<Uint8Array> => {
+export const sign = async <T extends SignOptions>(options: T): Promise<SignResult<T>> => {
   assertSignOptions(options);
 
   // TEMPORARY
@@ -154,8 +177,8 @@ export const sign = async (options: SignOptions): Promise<Uint8Array> => {
   }
 
   if (isMultiSignOptions(options)) {
-    return multiSign(options);
+    return multiSign(options) as Promise<SignResult<T>>;
   }
 
-  return singleSign(options);
+  return singleSign(options) as Promise<SignResult<T>>;
 };

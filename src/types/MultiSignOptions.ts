@@ -71,13 +71,21 @@ export interface MultiSignOptions {
    */
   readonly skipEncodingPayload?: boolean;
   /**
-   * Indicates whether to tag the resulting output with a CBOR tag structure
+   * Indicates whether to tag the resulting output with a CBOR tag structure.
+   *
+   * Note - The tag will always be skipped when encoding of the result is skipped.
    */
   readonly skipTag?: boolean;
   /**
    * Signer or Array of Signers
    */
   readonly signers: readonly Signer[];
+  /**
+   * Indicates whether to skip CBOR encoding of the signing result.
+   *
+   * Note - When true, the tag will always be skipped.
+   */
+  readonly skipEncodingResult?: boolean;
 }
 
 /**

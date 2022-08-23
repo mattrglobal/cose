@@ -6,6 +6,8 @@ import { CoseSignatureAlgorithmEnum, JsonWebKeyPrivate } from "../src/types";
 import { getCurrentNodeMajorVersion } from "./utilities";
 import { signData } from "../src/crypto";
 import { CoseErrorTypes } from "../src";
+import { isMultiSignDecodedResult, isSingleSignDecodedResult } from "../src/types";
+import cbor from "../src/cbor";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -79,6 +81,21 @@ describe("sign", () => {
       });
       expect(result).toBeInstanceOf(Uint8Array);
       expect(result.length).toEqual(96);
+    });
+
+    it("should sign string payload and produce MultiSignDecodedResult with skipEncodingResult", async () => {
+      const result = await sign({
+        signers: [
+          {
+            algorithm: CoseSignatureAlgorithmEnum.ES256,
+            privateKey: p256Jwk,
+          },
+        ],
+        skipEncodingResult: true,
+        payload: "This is a payload",
+      });
+
+      expect(isMultiSignDecodedResult(result)).toBeTruthy();
     });
 
     it("should sign number payload", async () => {
@@ -228,6 +245,28 @@ describe("sign", () => {
 
         expect(verificationResult.verified).toBeTruthy();
       });
+
+      it(`should successfully round trip sign-verify with ${value.algorithmName} algorithm and skipEncodingResult`, async () => {
+        const result = await sign({
+          privateKey: value.key,
+          payload: "This is a payload",
+          algorithm: value.algorithm,
+          skipEncodingResult: true,
+        });
+
+        expect(isSingleSignDecodedResult(result)).toBeTruthy();
+
+        const encodedResult = new Uint8Array(cbor.encodeCanonical(result));
+        const verificationResult = await verify({
+          payload: encodedResult,
+          verifier: {
+            publicKey: value.key,
+          },
+        });
+
+        expect(verificationResult.verified).toBeTruthy();
+      });
+
       it(`should successfully round trip sign-verify with ${value.algorithmName} algorithm using external signer`, async () => {
         const result = await sign({
           externalSigner: value.externalSigner,

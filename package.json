@@ -1,6 +1,6 @@
 {
   "name": "@mattrglobal/cose",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "author": "MATTR",
   "license": "SEE LICENCE IN https://learn.mattr.global/docs/terms/sdk-licence-verifier-single-format-cwt-cose/",
   "private": false,

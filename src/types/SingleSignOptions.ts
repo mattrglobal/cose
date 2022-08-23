@@ -44,7 +44,9 @@ export interface SingleSignOptions {
    */
   readonly skipEncodingPayload?: boolean;
   /**
-   * Indicates whether to tag the resulting output with a CBOR tag structure
+   * Indicates whether to tag the resulting output with a CBOR tag structure.
+   *
+   * Note - The tag will always be skipped when encoding of the result is skipped.
    */
   readonly skipTag?: boolean;
   /**
@@ -59,6 +61,12 @@ export interface SingleSignOptions {
    * Note - either this parameter or the *signer* parameter MUST be present
    */
   readonly privateKey?: JsonWebKeyPrivate;
+  /**
+   * Indicates whether to skip CBOR encoding of the signing result.
+   *
+   * Note - When true, the tag will always be skipped.
+   */
+  readonly skipEncodingResult?: boolean;
 }
 
 /**
@@ -84,6 +92,7 @@ export const SingleSignOptionsValidator = z.object({
   skipTag: z.boolean().optional(),
   externalSigner: z.function().optional(),
   privateKey: z.optional(JsonWebKeyPrivateValidator),
+  skipEncodingResult: z.boolean().optional(),
 });
 
 /**

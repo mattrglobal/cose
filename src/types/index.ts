@@ -16,6 +16,8 @@ export { NormalizedCoseHeaders } from "./NormalizedCoseHeaders";
 export { CoseKey, assertCoseKey } from "./CoseKey";
 export * from "./iana";
 export * from "./JsonWebKey";
+export * from "./MultiSignDecodedResult";
+export * from "./SingleSignDecodedResult";
 export { DecodedPayloadResult } from "./DecodedPayloadResult";
 
 /**
